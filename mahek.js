@@ -1,45 +1,6 @@
-// const form = document.getElementById("user-form");
-//       form.addEventListener("submit", function(event) {
-//         event.preventDefault(); // prevent page from reloading
-//         validateForm();
-//       });
-
-//       function validateForm() {
-//         const name = document.getElementById("name").value;
-//         const email = document.getElementById("email").value;
-//         const password = document.getElementById("password").value;
-//         const dob = new Date(document.getElementById("dob").value);
-//         const age = (new Date() - dob) / (365 * 24 * 60 * 60 * 1000);
-//         const terms = document.getElementById("acceptTerms").checked;
-
-//         if (name === "") {
-//           alert("Please enter your name.");
-//           return false;
-//         }
-
-//         if (email === "") {
-//           alert("Please enter your email address.");
-//           return false;
-//         }
-
-//         if (password === "") {
-//           alert("Please enter a password.");
-//           return false;
-//         }
-
-//         if (age < 18 || age > 55) {
-//           alert("Please enter a valid date of birth (you must be between 18 and 55 years old).");
-//           c
-//         }
-
-//         if (!terms) {
-//           alert("Please accept the terms and conditions.");
-//           return false;
-//         }
-//        }
 let userForm = document.getElementById("user-form");
 const retriveEntries = () =>{
-	let entries = localStorage.getItem("user-entries");
+	let entries = localStorage.getItem("show-entry");
 	if(entries){
 		entries = JSON.parse(entries);
 	} else{
@@ -63,18 +24,21 @@ const displayEntries = () => {
 		return row;
 	}).join("\n");
 	const table = `<table border="2px"><tr> <th>name</th> <th>Email</th> <th>Password</th> <th>dob</th> <th>accepted terms?</th> </tr> ${tableEntries} </table>`;
-	let details = document.getElementById("user-entries");
+	let details = document.getElementById("show-entry");
 	details.innerHTML = table;
 	}
 const saveUserForm = (event) => {
 	event.preventDefault();
 	const name = document.getElementById("name").value;
 	const email = document.getElementById("email").value;
-	const password = document.getElementById("password").value;
+	const password = document.getElementById("pass").value;
 	const dob = document.getElementById("dob").value;
-	const TandC = document.getElementById("acceptTerms").checked;
+	const TandC = document.getElementById("ac").checked;
 	const age = calculateAge(new Date(dob));
-
+	console.log(name)
+	console.log(email)
+	console.log(password)
+	console.log(dob)
 	if (age >= 18 && age <= 55) {
 		const entry = {
 			name,
@@ -84,7 +48,7 @@ const saveUserForm = (event) => {
 			TandC
 		};
 		userEntries.push(entry);
-		localStorage.setItem("user-entries", JSON.stringify(userEntries));
+		localStorage.setItem("show-entry", JSON.stringify(userEntries));
 		displayEntries();
 	} else {
 		alert("Sorry, you must be between 18 and 55 years old to register.");
